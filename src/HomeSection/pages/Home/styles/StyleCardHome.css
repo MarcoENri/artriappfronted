@@ -1,0 +1,23 @@
+
+/* Estilos personalizados para el componente Carousel */
+
+/* Establece la altura del carrusel */
+.slick-slider {
+  height: 70ex;
+  width: 170ex;
+  background-color: rgba(100, 200, 255, 0.95);
+  border-radius: 3ex;
+}
+
+/* Establece el estilo del texto en cada slide */
+.slick-slide h3 {
+  font-size: 60px;
+  text-shadow: #000000;
+  font-weight: bold;
+  color: #fff;
+  margin: 5ex;
+  padding: 0;
+  text-align: center;
+  text-shadow: 2px 2px 4px #000000;
+}
+

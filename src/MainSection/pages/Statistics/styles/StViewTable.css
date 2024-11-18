@@ -1,0 +1,53 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css");
+
+
+.table-container{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+.table {
+	background-color: whitesmoke;
+}
+
+.row {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+}
+
+.row:hover {
+	background-color: crimson;
+}
+
+.title {
+	display: flex;
+	justify-content: center;
+	background-color: #dfdfdf;
+}
+
+.header .row {
+	padding: 5px;
+	background-color: cornflowerblue;
+}
+
+.header .row div {
+	display: flex;
+	justify-content: center;
+	font-weight: 600;
+	color: white;
+}
+
+.body .row {
+	padding: 5px;
+	cursor: pointer;
+}
+
+.body .row div {
+	display: flex;
+	justify-content: center;
+}
+
+
+
+

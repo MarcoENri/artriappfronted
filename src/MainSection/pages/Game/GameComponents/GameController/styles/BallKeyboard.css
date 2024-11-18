@@ -1,0 +1,7 @@
+.ballKeyboard{
+    display: flex;
+    flex-direction: row;
+    margin-left: 100px;
+    z-index: 1;
+    transform: translate(0,100%);
+}

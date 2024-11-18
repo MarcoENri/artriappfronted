@@ -1,0 +1,10 @@
+.table{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+}
+.row{
+    width: 100%;
+    border-left: 1px solid black;
+    font-size: 20px;
+}

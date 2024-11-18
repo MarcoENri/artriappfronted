@@ -1,0 +1,8 @@
+h1, h3{
+    color: rgb(0, 0, 0, 0.6);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.go-login{
+    display: flex;
+}

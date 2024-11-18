@@ -1,0 +1,28 @@
+*{
+    margin: 0;
+
+}
+
+.page-register{
+    display: flex;
+    width: 100%;
+    height: 100%;
+
+
+}
+
+
+.register-container{
+    width: 50%;
+    height: auto; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.poster-register{
+    width: 50%;
+    height: auto;
+}

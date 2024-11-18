@@ -1,0 +1,28 @@
+.container{
+    margin: 0;
+    width: auto;
+    background-color: rgba(105, 225, 225, 1);
+    border-top-left-radius: 10%;
+    border-bottom-left-radius: 10%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.image-container{
+    background-color: azure;
+    display: flex;
+    width: 20em;
+    height: 20em;
+    border-radius: 100%;
+    box-shadow: -2px -2px 1px;
+}
+
+.image{
+   border-radius: 100%;
+   position: relative;
+
+
+}
+

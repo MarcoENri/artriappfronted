@@ -1,0 +1,15 @@
+
+services:
+  web:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - /mnt/c/artriapp-fe-main:/app
+    networks:
+      - react_app_network
+
+networks:
+  react_app_network:
+    driver: bridge
+

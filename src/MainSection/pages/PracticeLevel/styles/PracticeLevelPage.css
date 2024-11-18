@@ -1,0 +1,60 @@
+/* Estilos generales */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.general-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #2a2a2a; /* Gris oscuro */
+    color: #2efc9f; /* Verde menta */
+    height: 100vh;
+    width: 100%;
+}
+
+/* Botón de inicio */
+.start-game {
+    font-size: 20px;
+    color: #2efc9f; /* Verde menta */
+    background-color: #333333;
+    border: 2px solid #2efc9f;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.start-game:hover {
+    background-color: #2efc9f;
+    color: #333333;
+}
+
+/* Estilos personalizados para el componente Carousel */
+.slick-slider {
+    height: 60ex; 
+    width: 150ex; 
+    background-color: rgba(42, 42, 42, 0.95); /* Gris oscuro semi-transparente */
+    border-radius: 3ex;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estilo de texto en cada slide */
+.slick-slide h3 {
+    font-size: 50px; 
+    font-weight: bold;
+    color: #2efc9f; /* Verde menta */
+    text-align: center;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6); 
+    margin: 0;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 1ex;
+}

@@ -1,0 +1,18 @@
+.gameNotes{
+    margin-left: 100px;
+    z-index: -1;
+    position: absolute;
+    
+}
+
+.startButton{
+    margin-left: 50em;
+    margin-top: 20em;
+    position: absolute;
+    width: 4em;
+    height: 4em;
+}
+
+.startIcon{
+    font-size: xx-large;
+}
