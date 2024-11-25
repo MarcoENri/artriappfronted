@@ -63,7 +63,7 @@ const NotesMozartDown = () => {
     ctx?.clearRect(0,0, ctx.canvas?.width, ctx.canvas?.height)
   }
     let animationFrameId: any;
-    const song = new Audio(`/src/MainSection/notes/AngeldeLuz.mp3`);
+    const song = new Audio(`https://res.cloudinary.com/dymptobl2/video/upload/v1732115615/AngeldeLuz_ripptb.mp3`);
     document.addEventListener("keydown", handleKeyDown, true);
     if(startGame) {
           song.play()

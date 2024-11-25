@@ -19,14 +19,14 @@ RUN npm run build
 # Etapa de producción
 FROM nginx:alpine
 
-# Establece el directorio de trabajo
+# Establece el directorio de trabajo en la carpeta de Nginx donde se sirven los archivos
 WORKDIR /usr/share/nginx/html
 
 # Elimina los archivos por defecto de Nginx
 RUN rm -rf ./*
 
 # Copia los archivos generados en la etapa de construcción
-COPY --from=build /app/dist ./
+COPY --from=build /app/dist ./ 
 
 # Copia el archivo de configuración principal de Nginx
 COPY nginx/nginx.conf /etc/nginx/nginx.conf

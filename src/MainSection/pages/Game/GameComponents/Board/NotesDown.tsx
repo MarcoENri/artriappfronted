@@ -63,7 +63,7 @@ const NotesDown = () => {
     ctx?.clearRect(0,0, ctx.canvas?.width, ctx.canvas?.height)
   }
     let animationFrameId: any;
-    const song = new Audio(`/src/MainSection/notes/ElAguacate.mp3`);
+    const song = new Audio(`https://res.cloudinary.com/dymptobl2/video/upload/v1732115605/ElAguacate_elfvt8.mp3`);
     document.addEventListener("keydown", handleKeyDown, true);
     if(startGame) {
           song.play()

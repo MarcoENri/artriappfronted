@@ -14,7 +14,7 @@ export default function () {
     <div className='home-container'>
         <div className="home-logo">
         
-        <img src='/src/assets/Logo-artri.png'/>
+        <img src='https://res.cloudinary.com/dymptobl2/image/upload/v1732115181/Logo-artri_rbus46.png'/>
 
         {/*<img src={imageUrl} alt="External Image"/>*/}
         

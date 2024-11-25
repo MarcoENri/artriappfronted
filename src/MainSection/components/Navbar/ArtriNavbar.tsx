@@ -20,7 +20,7 @@ export default function ArtriNavbar({onLogout}:any) {
         <Link to="/artri/auth/home">
           <div className="logo-artri-al">
           
-          <img className="artri-logo-al" src='/src/assets/logosimplify.png'/>
+          <img className="artri-logo-al" src='https://res.cloudinary.com/dymptobl2/image/upload/v1732115199/logosimplify_wwnamj.png'/>
              {/* <img className="artri-logo-al" src={imageUrl} alt="" title="Prueba"/>*/}
 
           </div>
