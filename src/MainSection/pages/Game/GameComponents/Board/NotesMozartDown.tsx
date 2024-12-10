@@ -110,7 +110,7 @@ const NotesMozartDown = () => {
   return (
     <div>
       <canvas ref={canvasRef} className="gameNotes" />
-      <PlayerSaveData score={score} songId={1} memberId={memberId} />
+      <PlayerSaveData score={score} songId={3} memberId={memberId} />
       {(!startGame)&&
       <button onClick={()=>setStartGame(true) } className='startButton'>
         <p className="startIcon"><PlayCircleOutlined /></p>

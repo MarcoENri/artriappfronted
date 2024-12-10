@@ -16,7 +16,7 @@ interface StView{
 
 
 export default function AdminStatisticsPage() {
-    const statisticsURL = `${Apiurl}/api/v1/statistics/member`
+    const statisticsURL = `${Apiurl}/api/v1/statistics/member/`
     const [listStatistics, setListStatistics] = useState<StView[]>([])
     const GetStatistics = async() => {
         try{

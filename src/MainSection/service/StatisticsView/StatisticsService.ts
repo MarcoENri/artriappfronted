@@ -1,7 +1,7 @@
 
 import { Apiurl } from "../../../HomeSection/pages/constantes/apiurl"
 
-export const statistics = `${Apiurl}/api/statistics`
+export const statistics = `${Apiurl}/api/v1/statistics`
 import axios from 'axios'
 
 let config = {

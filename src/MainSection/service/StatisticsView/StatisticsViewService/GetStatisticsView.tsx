@@ -11,7 +11,7 @@ export default function GetStatisticsView() {
     
     const findAllStatistics = async () =>{
         try{
-        await axios.get(`${Apiurl}/api/statistics/member`)
+        await axios.get(`${Apiurl}/api/v1/statistics/member/`)
         .then(results=>setData(results.data))
         }catch(error){
             console.log(error)

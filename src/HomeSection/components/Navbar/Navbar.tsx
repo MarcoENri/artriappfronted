@@ -11,7 +11,7 @@ export const Navbar=()=> {
       <nav className='navbar'>
         <Link to="/">
           <div className="logo">
-              <img className="artri-logo" src='/src/assets/logosimplify.png'/>
+              <img className="artri-logo" src='https://res.cloudinary.com/dymptobl2/image/upload/v1732115199/logosimplify_wwnamj.png'/>
               <p className='artri-name'>ARTRI</p>
           </div>
         </Link>
