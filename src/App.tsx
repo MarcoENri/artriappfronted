@@ -18,6 +18,11 @@ import PracticeLevelPage from './MainSection/pages/PracticeLevel/PracticeLevelPa
 import AdminStatisticsPage from './MainSection/pages/Statistics/AdminStatistics';
 import StatisticsPage from './MainSection/pages/Statistics/StatisticsPage';
 import { MemberCRUD } from './MainSection/service/Member/MemberCRUD';
+import Mendoza from './MainSection/pages/Game/HnMendoza';
+import Pasacalle from './MainSection/pages/Game/Pasacalle';
+import Yuyashpa from './MainSection/pages/Game/Yuyashpa';
+import TriosGarles from './MainSection/pages/Game/TriosGarles';
+import Julio from './MainSection/pages/Game/JulioJaramillo';
 
 
 
@@ -68,6 +73,11 @@ export default function App() {
       <Route path='/artri/auth/game/1'element={<GamePage/>}/>
       <Route path='/artri/auth/game/2'element={<ChopinGame/>}/>
       <Route path='/artri/auth/game/3'element={<MozartGame/>}/>
+      <Route path='/artri/auth/game/4'element={<Mendoza/>}/>
+      <Route path='/artri/auth/game/5'element={<Pasacalle/>}/>
+      <Route path='/artri/auth/game/6'element={<Yuyashpa/>}/>
+      <Route path='/artri/auth/game/7'element={<TriosGarles/>}/>
+      <Route path='/artri/auth/game/8'element={<Julio/>}/>
       <Route path='/artri/auth/statistics'element={<StatisticsPage/>}/>
     </Route>
     
