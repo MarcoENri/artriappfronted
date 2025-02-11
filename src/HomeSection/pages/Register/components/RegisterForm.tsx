@@ -22,15 +22,61 @@ const RegisterForm: React.FC = () => {
   };
 
   const registernavigate = useNavigate();
+
+  // Función de validación para verificar si el correo es de un dominio permitido
+  const validateEmail = (email: string) => {
+    // Definir los dominios permitidos
+    const allowedDomains = [
+      'gmail.com', 
+      'hotmail.com', 
+      'yahoo.com', 
+      'outlook.com', 
+      'sudamericano.edu.ec' // Agregar dominios personalizados como el del instituto
+    ];
+    
+    // Extraer el dominio del correo
+    const domain = email.split('@')[1];
+    
+    // Comprobar si el dominio está en la lista de permitidos
+    if (!domain || !allowedDomains.includes(domain)) {
+      message.error('Solo se permiten correos de dominios como gmail.com, hotmail.com, yahoo.com, outlook.com, sudamericano.edu.ec');
+      return false;
+    }
+    return true;
+  };
+
   const onFinish = async (fieldsValue: any) => {
+    const { email } = fieldsValue;
+  
+    // Validar que el correo tiene un dominio permitido
+    if (!validateEmail(email)) {
+      return; // Si el correo no es válido, no continuar con el registro
+    }
+  
     try {
-      await axios.post(`${Apiurl}/api/v1/auth/register`, fieldsValue);
-      alert('Registro exitoso');
+      // Hacer la solicitud de registro
+      const response = await axios.post(`${Apiurl}/api/v1/auth/register`, fieldsValue);
+      
+      // Si la respuesta es exitosa, mostrar mensaje y redirigir al login
+      message.success('Registro exitoso');
       registernavigate("artri/login");
-    } catch (err) {
-      console.error(err);
+  
+    } catch (err: unknown) {
+      // Comprobar si el error es de tipo AxiosError
+      if (axios.isAxiosError(err)) {
+        // Manejo del error de Axios
+        if (err.response && err.response.data && err.response.data.errorMessage) {
+          message.error(err.response.data.errorMessage);
+        } else {
+          message.error('Hubo un problema al registrar el usuario.');
+        }
+      } else {
+        // Si el error no es un AxiosError, lo manejamos de otra forma
+        message.error('Error desconocido');
+      }
     }
   };
+  
 
   return (
     <div>

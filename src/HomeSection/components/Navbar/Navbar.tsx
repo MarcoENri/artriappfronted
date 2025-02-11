@@ -22,7 +22,7 @@ export const Navbar=()=> {
               </ul>
         <Link to="artri/login">
           <div className="login-container">
-              <img className="login"src='/src/assets/login.svg'/>
+              <img className="login"src='https://res.cloudinary.com/dymptobl2/image/upload/v1732115182/login_dpfxyr.svg'/>
           </div>
         </Link>      
       </nav>
