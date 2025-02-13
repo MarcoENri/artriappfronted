@@ -35,7 +35,7 @@ COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/conf.d/ /etc/nginx/conf.d/
 
 # Expone el puerto 80
-EXPOSE 80
+EXPOSE 5173
 
 # Comando por defecto para iniciar Nginx
 CMD ["nginx", "-g", "daemon off;"]
