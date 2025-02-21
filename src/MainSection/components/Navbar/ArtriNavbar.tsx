@@ -5,7 +5,7 @@ import {
   MenuUnfoldOutlined, 
   PlayCircleOutlined, 
   SettingOutlined, 
-  UserOutlined // Nuevo ícono para "Usuarios Registrados"
+  UserOutlined 
 } from '@ant-design/icons';
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
@@ -14,14 +14,14 @@ import "./styles/ArtriNavbar.css";
 export default function ArtriNavbar({ onLogout }: any) {
   const handleLogout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('role'); // Asegurarnos de eliminar el rol
+    localStorage.removeItem('role');
     onLogout();
   };
 
   let dataUser = JSON.parse(localStorage.getItem('dataUser')!!);
   const userRole = dataUser?.role ?? 'GUEST'; // Si no existe, asumimos GUEST
 
-  console.log("Rol de usuario:", userRole); // 🔥 Asegurarse que imprima ADMIN o USER
+  console.log("Rol de usuario:", userRole); // Para verificar el rol de usuario
 
   return (
     <div>
@@ -35,20 +35,18 @@ export default function ArtriNavbar({ onLogout }: any) {
           <li className='link-item-artri'><Link to="/artri/auth/home"><HomeOutlined /></Link></li>
           <li className='link-item-artri'><Link to="/artri/auth/game"><PlayCircleOutlined /></Link></li>
           <li className='link-item-artri'><Link to="/artri/auth/repository"><MenuUnfoldOutlined /></Link></li>
-          
-          {/* 🔥 Mostrar enlace de Usuarios Registrados solo si el rol es ADMIN */}
+
+          {/* Mostrar enlace de Usuarios Registrados solo si el rol es ADMIN */}
           {userRole === 'ADMIN' && (
             <li className='link-item-artri'>
-              <Link to="/artri/auth/admin/users"><UserOutlined /></Link> {/* Cambié el ícono aquí */}
+              <Link to="/artri/auth/admin/users"><UserOutlined /></Link>
             </li>
           )}
-          
-          {/* 🔥 Mostrar enlace de Estadísticas solo si el rol es ADMIN */}
-          {userRole === 'ADMIN' && (
-            <li className='link-item-artri'>
-              <Link to="/artri/auth/statistics"><BarChartOutlined /></Link>
-            </li>
-          )}
+
+          {/* Mostrar enlace de Estadísticas para todos los usuarios */}
+          <li className='link-item-artri'>
+            <Link to="/artri/auth/statistics"><BarChartOutlined /></Link>
+          </li>
 
           <li className='link-item-artri'><Link to="/artri/auth/admin/stats"><SettingOutlined /></Link></li>
           <li className='link-item-artri'><Link to='/artri/home' onClick={handleLogout}><LogoutOutlined /></Link></li>
