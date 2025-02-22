@@ -16,7 +16,6 @@ export const Navbar=()=> {
           </div>
         </Link>
               <ul className='item'>
-                  <li className='link-item'><Link to = "/artri/home">Inicio</Link></li>
                   <li className='link-item'><Link to = "/artri/info">Informacion</Link></li>
                   <li className='link-item'><Link to = "/artri/contacts">Contacto</Link></li>
               </ul>

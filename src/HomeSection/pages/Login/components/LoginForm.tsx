@@ -64,7 +64,7 @@ function LoginForm({ onLogin }: any) {
           name="email"
           rules={[{ required: true, message: 'Por favor ingrese su correo' }]}
         >
-          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Usuario" />
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Correo electronico" />
         </Form.Item>
         <Form.Item
           name="password"

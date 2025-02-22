@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Divider, Form, Input, Select, message } from 'antd';
+import { Button, Divider, Form, Input, message } from 'antd';
 import PhraseRegister from './PhraseRegister';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -23,21 +23,17 @@ const RegisterForm: React.FC = () => {
 
   const registernavigate = useNavigate();
 
-  // Función de validación para verificar si el correo es de un dominio permitido
   const validateEmail = (email: string) => {
-    // Definir los dominios permitidos
     const allowedDomains = [
-      'gmail.com', 
-      'hotmail.com', 
-      'yahoo.com', 
-      'outlook.com', 
+      'gmail.com',
+      'hotmail.com',
+      'yahoo.com',
+      'outlook.com',
       'sudamericano.edu.ec' // Agregar dominios personalizados como el del instituto
     ];
     
-    // Extraer el dominio del correo
     const domain = email.split('@')[1];
     
-    // Comprobar si el dominio está en la lista de permitidos
     if (!domain || !allowedDomains.includes(domain)) {
       message.error('Solo se permiten correos de dominios como gmail.com, hotmail.com, yahoo.com, outlook.com, sudamericano.edu.ec');
       return false;
@@ -48,36 +44,32 @@ const RegisterForm: React.FC = () => {
   const onFinish = async (fieldsValue: any) => {
     const { email } = fieldsValue;
   
-    // Validar que el correo tiene un dominio permitido
     if (!validateEmail(email)) {
       return; // Si el correo no es válido, no continuar con el registro
     }
-  
+
+    // Agregar el rol directamente en el objeto de datos a enviar
+    const registrationData = { ...fieldsValue, role: 'USER' };
+
     try {
-      // Hacer la solicitud de registro
-      const response = await axios.post(`${Apiurl}/api/v1/auth/register`, fieldsValue);
+      const response = await axios.post(`${Apiurl}/api/v1/auth/register`, registrationData);
       
-      // Si la respuesta es exitosa, mostrar mensaje y redirigir al login
       message.success('Registro exitoso');
       registernavigate("artri/login");
   
     } catch (err: unknown) {
-      // Comprobar si el error es de tipo AxiosError
       if (axios.isAxiosError(err)) {
-        // Manejo del error de Axios
         if (err.response && err.response.data && err.response.data.errorMessage) {
           message.error(err.response.data.errorMessage);
         } else {
           message.error('Hubo un problema al registrar el usuario.');
         }
       } else {
-        // Si el error no es un AxiosError, lo manejamos de otra forma
         message.error('Error desconocido');
       }
     }
   };
   
-
   return (
     <div>
       <PhraseRegister />
@@ -110,13 +102,6 @@ const RegisterForm: React.FC = () => {
 
         <Form.Item name="password" label="Contraseña" {...config}>
           <Input type="password" />
-        </Form.Item>
-
-        {/* Campo de rol visible y preseleccionado */}
-        <Form.Item name="role" label="Rol" initialValue="USER" {...config}>
-          <Select>
-            <Select.Option value="USER">Usuario</Select.Option>
-          </Select>
         </Form.Item>
 
         <Form.Item wrapperCol={{ xs: { span: 24, offset: 0 }, sm: { span: 16, offset: 8 } }}>
