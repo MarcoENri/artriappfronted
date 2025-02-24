@@ -41,6 +41,11 @@ const RegisterForm: React.FC = () => {
     return true;
   };
 
+  const generateRandomNickname = (): string => {
+    const randomNum = Math.floor(1000 + Math.random() * 9000);
+    return `user${randomNum}`;
+  };
+
   const onFinish = async (fieldsValue: any) => {
     const { email } = fieldsValue;
   
@@ -48,14 +53,18 @@ const RegisterForm: React.FC = () => {
       return; // Si el correo no es válido, no continuar con el registro
     }
 
-    // Agregar el rol directamente en el objeto de datos a enviar
-    const registrationData = { ...fieldsValue, role: 'USER' };
+    // Generar nickname automáticamente y agregar rol de usuario
+    const registrationData = { 
+      ...fieldsValue, 
+      nickname: generateRandomNickname(), 
+      role: 'USER' 
+    };
 
     try {
       const response = await axios.post(`${Apiurl}/api/v1/auth/register`, registrationData);
       
       message.success('Registro exitoso');
-      registernavigate("artri/login");
+      registernavigate("/artri/login");
   
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
@@ -80,10 +89,6 @@ const RegisterForm: React.FC = () => {
         onFinish={onFinish}
         style={{ maxWidth: 600 }}
       >
-        <Form.Item name="nickname" label="Nickname" {...config}>
-          <Input />
-        </Form.Item>
-
         <Form.Item name="name" label="Nombre" {...config}>
           <Input />
         </Form.Item>
