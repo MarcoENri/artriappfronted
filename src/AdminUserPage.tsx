@@ -9,6 +9,7 @@ const AdminUsersPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const [newPassword, setNewPassword] = useState<string>('');
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
   // Verificar el rol del usuario
   const isAdmin = localStorage.getItem('role') === 'ADMIN';
@@ -39,19 +40,16 @@ const AdminUsersPage = () => {
       });
   };
 
-  // Abrir el modal y establecer el ID del usuario seleccionado
   const showChangePasswordModal = (userId: number) => {
     setSelectedUserId(userId);
     setIsModalOpen(true);
   };
 
-  // Cerrar el modal
   const handleCancel = () => {
     setIsModalOpen(false);
     setNewPassword('');
   };
 
-  // Manejar el cambio de contraseña
   const handleChangePassword = async () => {
     if (!newPassword) {
       message.error('La nueva contraseña no puede estar vacía.');
@@ -64,14 +62,39 @@ const AdminUsersPage = () => {
       });
       message.success('Contraseña actualizada con éxito');
       handleCancel();
-      fetchUsers(); // Refrescar la lista de usuarios
+      fetchUsers();
     } catch (error) {
       console.error('Error al cambiar la contraseña:', error);
       message.error('No se pudo cambiar la contraseña');
     }
   };
 
-  // Columnas de la tabla con botón de acción para cambiar la contraseña
+  const handleDelete = async (userId: number) => {
+    const token = localStorage.getItem('token'); // Asegúrate de que el token esté almacenado correctamente
+  
+    try {
+      await axios.delete(`${Apiurl}/api/v1/member/delete/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      message.success('Usuario eliminado con éxito');
+      fetchUsers(); // Refrescar la lista de usuarios
+    } catch (error) {
+      console.error('Error al eliminar el usuario:', error);
+      message.error('No se pudo eliminar el usuario');
+    }
+  };
+
+  const showDeleteConfirm = (userId: number) => {
+    Modal.confirm({
+      title: '¿Estás seguro de que deseas eliminar este usuario?',
+      onOk: () => handleDelete(userId),
+      okText: 'Sí',
+      cancelText: 'Cancelar',
+    });
+  };
+
   const columns = [
     {
       title: 'Nombre',
@@ -92,9 +115,19 @@ const AdminUsersPage = () => {
       title: 'Acciones',
       key: 'actions',
       render: (_: any, record: any) => (
-        <Button type="primary" onClick={() => showChangePasswordModal(record.id)}>
-          Cambiar Contraseña
-        </Button>
+        <>
+          <Button type="primary" onClick={() => showChangePasswordModal(record.id)}>
+            Cambiar Contraseña
+          </Button>
+          <Button 
+            type="default" 
+            onClick={() => showDeleteConfirm(record.id)} 
+            loading={isDeleting}
+            style={{ marginLeft: 10, color: 'red', borderColor: 'red' }}
+          >
+            Eliminar
+          </Button>
+        </>
       ),
     },
   ];
