@@ -41,11 +41,6 @@ const RegisterForm: React.FC = () => {
     return true;
   };
 
-  const generateRandomNickname = (): string => {
-    const randomNum = Math.floor(1000 + Math.random() * 9000);
-    return `user${randomNum}`;
-  };
-
   const onFinish = async (fieldsValue: any) => {
     const { email } = fieldsValue;
   
@@ -53,10 +48,9 @@ const RegisterForm: React.FC = () => {
       return; // Si el correo no es válido, no continuar con el registro
     }
 
-    // Generar nickname automáticamente y agregar rol de usuario
+    // Agregar rol de usuario
     const registrationData = { 
       ...fieldsValue, 
-      nickname: generateRandomNickname(), 
       role: 'USER' 
     };
 
