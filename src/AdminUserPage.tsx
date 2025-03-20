@@ -10,8 +10,6 @@ const AdminUsersPage = () => {
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const [newPassword, setNewPassword] = useState<string>('');
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
-  const [userStatistics, setUserStatistics] = useState<{ [key: number]: any }>({});
-  const [statistics, setStatistics] = useState<any[]>([]);
 
   // Verificar el rol del usuario
   const isAdmin = localStorage.getItem('role') === 'ADMIN';
@@ -28,45 +26,28 @@ const AdminUsersPage = () => {
 
   useEffect(() => {
     fetchUsers();
-    fetchStatistics();
   }, []);
 
-  const fetchUsers = () => {
-    axios.get(`${Apiurl}/api/v1/member`)
-      .then(response => {
-        setUsers(response.data);
-        setLoading(false);
-        fetchUserStatistics(response.data); // Obtener estadísticas después de recibir los usuarios
-      })
-      .catch(error => {
-        console.error('Error fetching users:', error);
-        setLoading(false);
-      });
-  };
+  const fetchUsers = async () => {
+    try {
+      const usersResponse = await axios.get(`${Apiurl}/api/v1/member`);
+      const statisticsResponse = await axios.get(`${Apiurl}/api/v1/statistics`);
 
-  const fetchUserStatistics = (users: any[]) => {
-    users.forEach(user => {
-      axios.get(`${Apiurl}/api/v1/statistics/member/${user.id}`)
-        .then(response => {
-          setUserStatistics(prevStats => ({
-            ...prevStats,
-            [user.id]: response.data,
-          }));
-        })
-        .catch(error => {
-          console.error(`Error fetching statistics for user ${user.id}:`, error);
-        });
-    });
-  };
-
-  const fetchStatistics = () => {
-    axios.get(`${Apiurl}/api/v1/statistics`)
-      .then(response => {
-        setStatistics(response.data);
-      })
-      .catch(error => {
-        console.error("Error al obtener las estadísticas:", error);
+      const usersWithStats = usersResponse.data.map((user: any) => {
+        const userStats = statisticsResponse.data.find((stat: any) => stat.memberId === user.id);
+        return {
+          ...user,
+          score: userStats ? userStats.score : 'N/A',
+          date: userStats ? new Date(userStats.date).toLocaleString() : 'N/A',
+        };
       });
+
+      setUsers(usersWithStats);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching users or statistics:', error);
+      setLoading(false);
+    }
   };
 
   const showChangePasswordModal = (userId: number) => {
@@ -100,12 +81,12 @@ const AdminUsersPage = () => {
 
   const handleDelete = async (userId: number) => {
     const token = localStorage.getItem('token'); // Asegúrate de que el token esté almacenado correctamente
-  
+
     try {
       await axios.delete(`${Apiurl}/api/v1/member/delete/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
-        }
+        },
       });
       message.success('Usuario eliminado con éxito');
       fetchUsers(); // Refrescar la lista de usuarios
@@ -126,12 +107,11 @@ const AdminUsersPage = () => {
 
   const columns = [
     {
-  
-        title: 'ID',
-        dataIndex: 'id',
-        key: 'id',
-      },
-      {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
       title: 'Nombre',
       dataIndex: 'name',
       key: 'name',
@@ -145,8 +125,16 @@ const AdminUsersPage = () => {
       title: 'Correo',
       dataIndex: 'email',
       key: 'email',
-    
-     
+    },
+    {
+      title: 'Puntaje',
+      dataIndex: 'score',
+      key: 'score',
+    },
+    {
+      title: 'Fecha Última Actividad',
+      dataIndex: 'date',
+      key: 'date',
     },
     {
       title: 'Acciones',
@@ -156,9 +144,9 @@ const AdminUsersPage = () => {
           <Button type="primary" onClick={() => showChangePasswordModal(record.id)}>
             Cambiar Contraseña
           </Button>
-          <Button 
-            type="default" 
-            onClick={() => showDeleteConfirm(record.id)} 
+          <Button
+            type="default"
+            onClick={() => showDeleteConfirm(record.id)}
             loading={isDeleting}
             style={{ marginLeft: 10, color: 'red', borderColor: 'red' }}
           >
@@ -180,7 +168,7 @@ const AdminUsersPage = () => {
   return (
     <div>
       <Table dataSource={users} columns={columns} rowKey="id" />
-      
+
       <Modal
         title="Cambiar Contraseña"
         visible={isModalOpen}
@@ -195,31 +183,6 @@ const AdminUsersPage = () => {
           onChange={(e) => setNewPassword(e.target.value)}
         />
       </Modal>
-
-      
-      <Table
-        dataSource={statistics}
-        columns={[
-          
-          {
-            title: 'Usuario',
-            dataIndex: 'memberId',
-            key: 'memberId',
-          },
-          {
-            title: 'Puntaje',
-            dataIndex: 'score',
-            key: 'score',
-          },
-          {
-            title: 'Fecha',
-            dataIndex: 'date',
-            key: 'date',
-            render: (text) => new Date(text).toLocaleString(),
-          },
-        ]}
-        rowKey="id"
-      />
     </div>
   );
 };
