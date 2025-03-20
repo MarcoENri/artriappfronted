@@ -48,7 +48,6 @@ export default function ArtriNavbar({ onLogout }: any) {
             <Link to="/artri/auth/statistics"><BarChartOutlined /></Link>
           </li>
 
-          <li className='link-item-artri'><Link to="/artri/auth/admin/stats"><SettingOutlined /></Link></li>
           <li className='link-item-artri'><Link to='/artri/home' onClick={handleLogout}><LogoutOutlined /></Link></li>
         </ul>
       </nav>

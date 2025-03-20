@@ -24,18 +24,9 @@ const RegisterForm: React.FC = () => {
   const registernavigate = useNavigate();
 
   const validateEmail = (email: string) => {
-    const allowedDomains = [
-      'gmail.com',
-      'hotmail.com',
-      'yahoo.com',
-      'outlook.com',
-      'sudamericano.edu.ec' // Agregar dominios personalizados como el del instituto
-    ];
-    
-    const domain = email.split('@')[1];
-    
-    if (!domain || !allowedDomains.includes(domain)) {
-      message.error('Solo se permiten correos de dominios como gmail.com, hotmail.com, yahoo.com, outlook.com, sudamericano.edu.ec');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      message.error('Ingrese un correo electrónico válido.');
       return false;
     }
     return true;

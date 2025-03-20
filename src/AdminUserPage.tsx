@@ -10,6 +10,8 @@ const AdminUsersPage = () => {
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const [newPassword, setNewPassword] = useState<string>('');
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [userStatistics, setUserStatistics] = useState<{ [key: number]: any }>({});
+  const [statistics, setStatistics] = useState<any[]>([]);
 
   // Verificar el rol del usuario
   const isAdmin = localStorage.getItem('role') === 'ADMIN';
@@ -26,6 +28,7 @@ const AdminUsersPage = () => {
 
   useEffect(() => {
     fetchUsers();
+    fetchStatistics();
   }, []);
 
   const fetchUsers = () => {
@@ -33,10 +36,36 @@ const AdminUsersPage = () => {
       .then(response => {
         setUsers(response.data);
         setLoading(false);
+        fetchUserStatistics(response.data); // Obtener estadísticas después de recibir los usuarios
       })
       .catch(error => {
         console.error('Error fetching users:', error);
         setLoading(false);
+      });
+  };
+
+  const fetchUserStatistics = (users: any[]) => {
+    users.forEach(user => {
+      axios.get(`${Apiurl}/api/v1/statistics/member/${user.id}`)
+        .then(response => {
+          setUserStatistics(prevStats => ({
+            ...prevStats,
+            [user.id]: response.data,
+          }));
+        })
+        .catch(error => {
+          console.error(`Error fetching statistics for user ${user.id}:`, error);
+        });
+    });
+  };
+
+  const fetchStatistics = () => {
+    axios.get(`${Apiurl}/api/v1/statistics`)
+      .then(response => {
+        setStatistics(response.data);
+      })
+      .catch(error => {
+        console.error("Error al obtener las estadísticas:", error);
       });
   };
 
@@ -97,6 +126,12 @@ const AdminUsersPage = () => {
 
   const columns = [
     {
+  
+        title: 'ID',
+        dataIndex: 'id',
+        key: 'id',
+      },
+      {
       title: 'Nombre',
       dataIndex: 'name',
       key: 'name',
@@ -110,6 +145,8 @@ const AdminUsersPage = () => {
       title: 'Correo',
       dataIndex: 'email',
       key: 'email',
+    
+     
     },
     {
       title: 'Acciones',
@@ -158,6 +195,31 @@ const AdminUsersPage = () => {
           onChange={(e) => setNewPassword(e.target.value)}
         />
       </Modal>
+
+      
+      <Table
+        dataSource={statistics}
+        columns={[
+          
+          {
+            title: 'Usuario',
+            dataIndex: 'memberId',
+            key: 'memberId',
+          },
+          {
+            title: 'Puntaje',
+            dataIndex: 'score',
+            key: 'score',
+          },
+          {
+            title: 'Fecha',
+            dataIndex: 'date',
+            key: 'date',
+            render: (text) => new Date(text).toLocaleString(),
+          },
+        ]}
+        rowKey="id"
+      />
     </div>
   );
 };
